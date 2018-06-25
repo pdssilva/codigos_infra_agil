@@ -1,0 +1,27 @@
+- name: instalando pacotes debian
+  yum:
+    name: "{{item}}"
+    state: present
+  with_items:
+      - httpd
+  when: ansible_os_family == "RedHat"
+
+- name: verificando se o apache está habilitado
+  service:
+   name: "{{item}}"
+   state: started
+  with_items:
+   - httpd
+  when: ansible_osfamily == "RedHat"
+
+- name: parando o firewall
+  service:
+   name: firewalld
+   state: stopped
+  when: ansible_osfamily == "RedHat"
+
+
+
+
+
+

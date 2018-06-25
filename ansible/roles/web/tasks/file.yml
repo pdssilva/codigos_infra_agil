@@ -1,0 +1,14 @@
+- name: excluindo a index padrão do apache
+  command: test -f /var/www/html/index.html
+  register: result
+
+- name: excluindo o arquivo se existe
+  file:
+   path: /var/www/html/index.html
+   state: absent
+  when: result.rc == 0 
+
+- name: enviando o arquivo index
+  copy:
+   src: ..files/index.php
+   dest: /var/www/html/index.html
